@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playbook - Sesión 6: ¡Pruebas Detalladas! – Calidad Avanzada</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; color: #333; line-height: 1.6; }
+        .container { max-width: 1000px; margin: auto; padding: 20px; }
+        .header { background-color: #ffa500; color: white; text-align: center; padding: 10px; } /* Orange Accent */
+        .activity { margin-bottom: 20px; }
+        details > summary {
+            background-color: #ffa500; /* Orange Accent */
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            margin-bottom: 0px; /* Reduced margin */
+            font-weight: bold;
+            list-style: none; /* Hide default arrow */
+            position: relative;
+            outline: none;
+            border-radius: 5px 5px 0 0; /* Rounded top corners */
+        }
+        details > summary::-webkit-details-marker { display: none; } /* Hide default arrow for Chrome/Safari */
+        details > summary::before { /* Custom Arrow */
+            content: '▶';
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.9em; /* Slightly larger arrow */
+            transition: transform 0.2s;
+        }
+        details[open] > summary::before { /* Custom Arrow when open */
+            transform: translateY(-50%) rotate(90deg);
+        }
+        details .content { /* Content visible by default inside details */
+             display: block;
+             padding: 15px; /* More padding */
+             border: 1px solid #ddd;
+             border-top: none; /* Avoid double border with summary */
+             margin-bottom: 10px;
+             border-radius: 0 0 5px 5px; /* Rounded bottom corners */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px; /* Add some space above the table */
+        }
+        th, td {
+            padding: 12px; /* Slightly more padding */
+            border: 1px solid #ddd;
+            text-align: left;
+            vertical-align: top; /* Ensure content aligns at the top */
+        }
+        th {
+            background-color: #f8f8f8; /* Lighter grey background for headers */
+            font-weight: bold;
+        }
+        /* Style for the 'Action' column */
+        td:first-child {
+            width: 50%;
+        }
+        /* Style for the 'Dialogue' column */
+        td:last-child {
+            width: 50%;
+        }
+        /* Making facilitator instructions clearer */
+        td em, td i { /* Style for italicized facilitator notes */
+            color: #555;
+            font-style: italic;
+            display: block; /* Put notes on new lines */
+            margin-top: 5px;
+        }
+        /* Ensure step <strong> tags render bold */
+        td strong { font-weight: bold; display: block; margin-bottom: 5px; }
+
+
+        span[style*="color: red;"] {
+            font-weight: bold;
+        }
+        ul, ol {
+            margin-top: 5px; /* Adjust spacing for lists */
+            margin-bottom: 10px;
+            padding-left: 25px; /* Indent lists slightly more */
+        }
+        li {
+            margin-bottom: 8px; /* More space between list items */
+        }
+        .time-title { margin-bottom: 20px; text-align: center; font-size: 1.2em; color: #555; font-weight: bold;}
+         hr { border: none; border-top: 1px solid #eee; margin: 8px 0; } /* Subtle separator */
+         .subtitle { font-size: 0.9em; color: #e0e0e0; margin-top: 5px;} /* Subtitle style from example */
+    </style>
+    <script>
+        // Basic script to ensure details elements work consistently if needed,
+        // but modern browsers handle <details> natively.
+    </script>
+</head>
+<body>
+    <div class="header">
+        <h1>Playbook - Sesión 6: ¡Pruebas Detalladas! – Calidad Avanzada</h1>
+    </div>
+    <div class="container">
+        <h2 class="time-title">Tiempo efectivo de clase: 40 minutos</h2>
+
+        <!-- Resumen de Sesión -->
+        <details id="activity-0" class="activity" open> <!-- Open by default -->
+            <summary>📝 Resumen de Sesión</summary>
+            <div class="content">
+                <table>
+                    <tr>
+                        <td style="width: 50%; padding: 10px; border-right: 1px solid #ddd;">
+                            <strong>🎯 Objetivo de la Sesión:</strong>
+                            <ul>
+                                <li>Probar TODAS las funcionalidades añadidas en sesiones anteriores (movimientos, sonidos, textos, además del flujo principal de clics).</li>
+                                <li>Identificar errores (bugs) más complejos o sutiles que puedan haber surgido con la integración de nuevas características.</li>
+                                <li>Corregir los bugs encontrados, enfocándose en la estabilidad general del proyecto.</li>
+                                <li>Asegurar una experiencia de usuario fluida y sin errores evidentes.</li>
+                            </ul>
+                        </td>
+                        <td style="width: 50%; padding: 10px;">
+                            <strong>🔑 Entregable Clave:</strong> Proyecto Scratch Jr. con todas las funcionalidades integradas (flujo, movimiento, sonido, texto) probadas exhaustivamente y con los errores más significativos corregidos.
+                            <br><br>
+                            <strong>⏱️ Duración Estimada:</strong> 40 minutos.
+                            <br><br>
+                            <strong>🛠️ Materiales Específicos:</strong>
+                            <ul>
+                                <li>Dispositivos con Scratch Jr. y el proyecto pulido guardado de la Sesión 5.</li>
+                                <li>Tablero Kanban con el estado actualizado de la Sesión 5.</li>
+                                <li>Nuevas tarjetas de tareas para Kanban: "Probar Sonidos Integrados", "Probar Movimientos Integrados", "Probar Textos", "Corregir Errores Avanzados".</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </details>
+
+        <!-- Actividad 1: Stand-up de Calidad Total -->
+        <details id="activity-1" class="activity">
+            <summary>🚨 Actividad 1: Stand-up de Calidad Total ⏰ Tiempo: 5 minutos</summary>
+            <div class="content">
+                <table>
+                    <tr>
+                        <th style="width: 50%;">Acción</th>
+                        <th style="width: 50%;">Diálogo del Maestro</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Paso 1 (2 min): Revisión y Objetivo del Día</strong>
+                            <br>Reunir a los equipos con su proyecto abierto.
+                            <br>Preguntar qué funcionalidades se añadieron y pulieron en las últimas sesiones (Clics, Movimiento, Sonido, Visual).
+                            <br><strong>Proyectar Diapositiva 1</strong> (Título de la Sesión + Iconos de checklist, lupa sobre código/bloques, personaje corriendo/probando).
+                        </td>
+                        <td>
+                            "¡Hola, Equipos de Calidad! ¡Hoy es el día de la prueba definitiva!"
+                            <br><br>
+                            "En las últimas sesiones, añadimos clics, movimiento, sonido y pulimos el aspecto visual. ¿Qué cosas geniales tiene ya su aventura? <em>(Permitir respuestas breves)</em>."
+                            <br><br>
+                            "¡Excelente! Ahora que tenemos TODO junto... nuestra misión es ¡PROBARLO TODO! <em>(Mostrar Diapositiva 1)</em>. Seremos súper detectives para asegurarnos de que cada parte funciona bien, incluso juntas. ¡Queremos una aventura de CALIDAD AVANZADA!"
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Paso 2 (3 min): Roles y Kanban</strong>
+                             <br>Reafirmar que el/la **Probador/a de Aventura** lidera las pruebas exhaustivas. Revisar roles (Constructor/a enfocado en bugs complejos, Diseñador/a ayuda a diagnosticar).
+                             <br>Confirmar roles (última oportunidad para rotar si es necesario antes de las pruebas finales).
+                             <br>Añadir tarjetas "Probar Sonidos Integrados", "Probar Movimientos Integrados", "Probar Textos", "Corregir Errores Avanzados" a "Tareas por Hacer" en Kanban.
+                        </td>
+                        <td>
+                            "¡Una vez más, el/la **Probador/a** es nuestro/a capitán/a de calidad hoy! Guiará las pruebas más difíciles."
+                            <br><br>
+                            "El/La Constructor/a se prepara para arreglar bugs que quizás sean más complicados ahora que hay más cosas juntas. El/La Diseñador/a ayudará a descubrir si el problema es de lógica, sonido, visual..."
+                             <br><br>
+                            "¿Listos con sus roles? <em>(Confirmar roles)</em>. ¡Bien!"
+                            <br><br>
+                             "Nuevas misiones detalladas para el Mapa Mágico: 'Probar Sonidos Integrados', 'Probar Movimientos Integrados', 'Probar Textos' y el desafío 'Corregir Errores Avanzados'."
+                             <br>
+                            <em>(Añadir tarjetas al Kanban).</em> "¡Equipo de pruebas intensivas, preparados!"
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </details>
+
+        <!-- Actividad 2: Ciclo Pruebas Integrales -->
+        <details id="activity-2" class="activity">
+            <summary>🧪 Actividad 2: Ciclo Pruebas Integrales ⏰ Tiempo: 30 minutos</summary>
+            <div class="content">
+                <table>
+                    <tr>
+                        <th style="width: 50%;">Acción</th>
+                        <th style="width: 50%;">Diálogo del Maestro</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Paso 1 (15 min): Pruebas Exhaustivas (Probador/a Lidera)</strong>
+                            <br>El **Probador/a** ejecuta el flujo completo (Inicio -> Clic -> Fin) MÚLTIPLES VECES.
+                            <br>Durante las pruebas, verifica específicamente:
+                            <ul>
+                                <li>¿Se activan los sonidos añadidos correctamente? ¿Siempre?</li>
+                                <li>¿Los movimientos ocurren como se esperaba? ¿No se traban o repiten indefinidamente?</li>
+                                <li>¿El texto añadido aparece claro y en el momento justo?</li>
+                                <li>¿Hay algo que se vea raro, roto, o que funcione distinto a como debería ahora que todo está junto?</li>
+                            </ul>
+                            <br>El **Probador/a** reporta TODO lo anómalo al equipo con detalle.
+                            <br>Mover tarjetas "Probar Sonidos...", "Probar Movimientos...", "Probar Textos..." a "¡Haciendo Ahora!".
+                            <br>Facilitador anima a probar combinaciones y casos límite.
+                        </td>
+                        <td>
+                            "¡Probadores, máxima concentración! ¡Es la prueba integral!"
+                            <br><br>
+                            "Jueguen la aventura completa, desde el inicio hasta el final (Escena Mejor o Peor). ¡Háganlo varias veces!"
+                            <br><br>
+                            "Mientras juegan, fíjense bien: ¿Se oyen los sonidos que añadimos? ¿Siempre? ¿Los personajes se mueven como programamos? ¿El texto se ve bien? ¿Hay algo... RARO? ¿Algo que antes funcionaba y ahora no?"
+                            <br><br>
+                            "¡Sean MUY observadores! Si algo no cuadra, aunque sea pequeño, ¡repórtenlo TODO al equipo!"
+                             <br><br>
+                            "¡Muevan las tarjetas de 'Probar...' a '¡Haciendo Ahora!' mientras testean!"
+                             <br>
+                            <em>(Facilitador observa y sugiere: "¿Probaste tocar mientras se mueve?", "¿Qué pasa si haces clic justo cuando suena el pop?", "Intenta ir a la escena peor y luego a la mejor, ¿todo sigue bien?").</em>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Paso 2 (13 min): Corrección de Errores Avanzados (Constructor/a y Diseñador/a Colaboran)</strong>
+                            <br>El **Constructor/a** se enfoca en arreglar los bugs reportados. Estos pueden ser más complejos (ej. un sonido que no para, una animación que se traba, texto que tapa algo importante).
+                            <br>El **Diseñador/a** ayuda activamente a diagnosticar: ¿Es un problema de cómo se ven las cosas juntas (visual)? ¿Es un sonido que interfiere (sonido)? ¿Es la secuencia de bloques la que falla (lógica)?
+                            <br>El equipo colabora para encontrar la solución e implementarla.
+                            <br><strong>Proyectar Diapositiva 2</strong> (Mostrar ejemplos visuales de posibles bugs avanzados: ej. dos scripts corriendo a la vez causando problemas, un bloque 'repetir' sin fin, texto superpuesto a personaje).
+                            <br>Mover tarjeta "Corregir Errores Avanzados" a "¡Haciendo Ahora!" cuando se esté arreglando un bug.
+                            <br>Facilitador ofrece apoyo técnico y estratégico para resolver bugs complejos.
+                        </td>
+                        <td>
+                            "¡Equipo, si el Probador encontró un bug avanzado, ¡es un desafío para expertos!"
+                            <br><br>
+                            "Constructor/a, ¡ahora tu habilidad es clave! Revisa los bloques relacionados con el error. ¿Hay dos cosas intentando pasar a la vez? ¿Algún sonido o movimiento se queda 'pegado'? <em>(Referirse a Diapositiva 2 si muestra ejemplos)</em>."
+                            <br><br>
+                            "Diseñador/a, ¡ayuda a investigar! ¿El problema es cómo se ve? ¿Cómo suena? ¿O es la secuencia de pasos la que está mal?"
+                            <br><br>
+                            "¡Trabajen juntos para encontrar la solución! A veces hay que probar quitar un bloque, cambiar un número, o reordenar las instrucciones."
+                            <br><br>
+                            "Cuando estén arreglando, ¡muevan 'Corregir Errores Avanzados' a '¡Haciendo Ahora!'."
+                             <br>
+                            <em>(Facilitador interviene si están atascados: "¿Y si probamos poner un bloque de 'esperar' aquí?", "¿Revisaron los scripts de AMBOS personajes?", "¿Quizás el texto es muy largo y por eso se ve mal?").</em>
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>
+                            <strong>Paso 3 (2 min): Re-Prueba Final y Kanban</strong>
+                            <br>El **Probador/a** vuelve a probar específicamente la parte que fue corregida y el flujo general cercano para asegurar que el arreglo no rompió otra cosa.
+                            <br>Si todo funciona de manera integrada y estable, mover todas las tarjetas de la sesión a "✅ ¡Terminado!".
+                        </td>
+                        <td>
+                            "¡Arreglo implementado! Probador/a, ¡la prueba final!"
+                            <br><br>
+                            "Verifica que el bug que encontraron ya NO esté. ¡Y revisa un poco alrededor! ¿El arreglo afectó otra cosa? ¿Todo sigue funcionando bien junto?"
+                            <br><br>
+                            "Si la aventura completa funciona ahora sin problemas... ¡Hemos alcanzado la CALIDAD AVANZADA! ¡Muevan TODAS las tarjetas de hoy a '✅ ¡Terminado!' con un grito de victoria!"
+                             <br>
+                            <em>(Asegurar que los equipos actualicen el Kanban).</em>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </details>
+
+        <!-- Actividad 3: Cierre de Integración -->
+        <details id="activity-3" class="activity">
+            <summary>🏆 Actividad 3: Cierre de Integración ⏰ Tiempo: 5 minutos</summary>
+            <div class="content">
+                <table>
+                    <tr>
+                        <th style="width: 50%;">Acción</th>
+                        <th style="width: 50%;">Diálogo del Maestro</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Paso 1 (2 min): Confirmación de Estabilidad</strong>
+                            <br>Preguntar a los equipos si su proyecto ahora se siente completo y funciona bien en todas sus partes.
+                            <br>Felicitar por el esfuerzo de integración y depuración.
+                        </td>
+                        <td>
+                            "¡Equipos de Calidad Suprema! ¿Cómo se siente su aventura ahora? ¿Todo funciona junto y sin problemas importantes?"
+                            <br><br>
+                            "¡Probar y arreglar cuando todo está junto es un gran desafío, y lo han hecho genial! ¡Integrar todas las piezas es un logro enorme! ¡Felicidades!"
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Paso 2 (2 min): Guardar Proyecto (¡Fundamental!)</strong>
+                            <br>Guiar EXPLICITAMENTE a los Constructores para guardar la versión integrada y probada.
+                            <br>Asegurarse de que todos guarden.
+                            <br><strong>Proyectar Diapositiva 3</strong> (Icono grande de Guardar + Mensaje "¡Guarda tu Versión Integrada!").
+                        </td>
+                        <td>
+                            "¡Momento crítico final! ¡Guardemos esta versión completa y probada!"
+                            <br><br>
+                            "Constructores, ¡último guardado de hoy! Botón de guardar (casita o ✓). <em>(Mostrar Diapositiva 3)</em>."
+                             <br><br>
+                            <em>(Verificar que todos guarden).</em> "¿Todo a salvo? ¡Perfecto!"
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>
+                            <strong>Paso 3 (1 min): Próximos Pasos y Cierre</strong>
+                            <br>Anunciar brevemente las Sesiones 7-9 como "Flexibles" para añadir más interacciones o refinar, según el progreso y la complejidad.
+                            <br>Felicitar final.
+                        </td>
+                        <td>
+                            "¡Felicidades, creadores! ¡Han superado las pruebas detalladas y tienen una aventura integrada!"
+                            <br><br>
+                            "Las próximas sesiones serán más flexibles. Dependiendo de cómo vayamos, podremos añadir 'Una Sorpresa Más' (una pequeña interacción extra) o dedicar tiempo a refinar aún más lo que ya tenemos. ¡Ya veremos qué desafío nos espera!"
+                            <br><br>
+                            "¡Gran trabajo de integración y calidad hoy! ¡Nos vemos pronto! ¡Adiós!"
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </details>
+
+    </div> <!-- Fin del container -->
+</body>
+</html>
